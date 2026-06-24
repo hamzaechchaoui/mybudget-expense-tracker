@@ -46,8 +46,19 @@ public static class BudgetRules
     /// </summary>
     public static string ClassifyAmount(decimal amount)
     {
-        // TODO
-        throw new NotImplementedException();
+        if (amount <= 0)
+        {
+            throw new InvalidExpenseException("Amount must be greater than zero for classification.");
+        }
+
+        // Using a switch expression with relational patterns (Module 3)
+        return amount switch
+        {
+            < 10m => "Micro",
+            < 50m => "Small",
+            < 200m => "Medium",
+            _ => "Large"
+        };
     }
 
     /// <summary>
