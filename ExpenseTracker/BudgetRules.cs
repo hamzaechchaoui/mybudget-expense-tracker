@@ -98,27 +98,37 @@ public static class BudgetRules
     /// </summary>
     public static string BudgetStatus(decimal remaining, decimal monthlyLimit)
     {
-        // TODO
-        throw new NotImplementedException();
+        if (monthlyLimit <= 0)
+        {
+            throw new InvalidExpenseException("Monthly budget limit must be greater than zero.");
+        }
+
+        if (remaining < 0)
+        {
+            return "OVER BUDGET";
+        }
+        
+        // Less than 10% of the limit remaining
+        if (remaining < (monthlyLimit * NearLimitFraction))
+        {
+            return "Almost out";
+        }
+
+        return "On track";
     }
 
     /// <summary>
     /// Formats an amount as currency using the default "$" symbol.
     /// Implement this as an expression-bodied member that calls the overload.
     /// </summary>
-    public static string FormatCurrency(decimal amount)
-    {
-        // TODO: return FormatCurrency(amount, "$");
-        throw new NotImplementedException();
-    }
+   public static string FormatCurrency(decimal amount) => FormatCurrency(amount, "$");
 
     /// <summary>
     /// Formats an amount as currency using the given symbol, e.g. "$62.40".
     /// </summary>
     public static string FormatCurrency(decimal amount, string currencySymbol)
     {
-        // TODO: use a "0.00" format string
-        throw new NotImplementedException();
+        return $"{currencySymbol}{amount.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)}";
     }
 }
 
