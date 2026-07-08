@@ -1,32 +1,54 @@
-# MyBudget Expense Tracker — Assignment 1 (Starter)
+# MyBudget — Assignment 2 (Provided Pack)
 
-Welcome! This starter solution contains everything you need to begin.
+This pack gives you the **contract** and the **UI**, not the solution. Your task
+is to design and build the classes and records yourself, following the
+"Build specification" section of the assignment brief, until the whole solution
+compiles and every provided test passes.
+
+> Important: **this solution does NOT compile as delivered.** The console UI and
+> the unit tests reference types you have not created yet. Creating those types
+> correctly is the assignment.
+
+## What is provided
 
 ```
-ExpenseTracker.sln
-├─ ExpenseTracker/             the app you will build
-│   ├─ BudgetRules.cs          << implement the methods here (start here)
-│   └─ Program.cs              << build the console menu UI here
-└─ ExpenseTracker.Tests/       provided xUnit tests — DO NOT MODIFY
-    └─ BudgetRulesTests.cs
+MyBudget.sln
+├─ MyBudget.Core/
+│   ├─ ExpenseCategory.cs        enum (provided)
+│   ├─ InvalidExpenseException.cs (provided)
+│   ├─ IReportable.cs            interface (provided)
+│   ├─ IExpenseStore.cs          interface (provided)
+│   ├─ IExpenseRepository.cs     interface (provided)
+│   └─ IBudgetService.cs         interface + BudgetStatus enum (provided)
+├─ MyBudget.App/
+│   ├─ ConsoleApp.cs             the menu UI (provided)
+│   └─ Program.cs                DI wiring — YOU complete the TODO
+├─ MyBudget.Data/                (empty — you add the JSON store)
+└─ MyBudget.Tests/               provided xUnit suite + fake (DO NOT MODIFY)
 ```
 
-## How to work
+## What you build (see the brief for exact signatures)
 
-1. Open `ExpenseTracker.sln` in Visual Studio 2026 (or run from the CLI).
-2. Open **Test Explorer** (Test → Test Explorer). Run the tests — they all fail at first.
-3. Implement the methods in `BudgetRules.cs` one at a time, re-running the tests until they are all green.
-4. Then build the interactive menu UI in `Program.cs` (see the assignment brief for the required features and a sample run).
-5. Commit your progress to GitHub as you go.
+- `MyBudget.Core/Expense.cs` — the `Expense` record hierarchy (base + two derived types)
+- `MyBudget.Core/ExpenseFactory.cs` — validation + creation
+- `MyBudget.Core/BudgetService.cs` — implements `IBudgetService`
+- `MyBudget.Core/ExpenseRepository.cs` — implements `IExpenseRepository`
+- `MyBudget.Data/JsonExpenseStore.cs` — implements `IExpenseStore`
+- `MyBudget.App/Program.cs` — register your services with the DI container
+- A test class of **your own** (additional to the provided tests)
 
-## Useful commands
+## Workflow
 
-```bash
-dotnet test            # run the provided unit tests
-dotnet run --project ExpenseTracker   # run your console app
-```
+1. Read the "Build specification" in the assignment brief.
+2. Create the types above with the exact names, namespaces, and signatures given.
+3. Build the solution; fix compile errors until it builds.
+4. Run the tests (Test Explorer or `dotnet test`) and make them all green.
+5. Add your own tests, run the app (`dotnet run --project MyBudget.App`), and
+   commit to GitHub as you go.
 
 ## Rules
 
-- Do **not** modify `BudgetRulesTests.cs` or change the method signatures in `BudgetRules.cs`. Your code must pass the tests as given.
-- Stay within Modules 1–4: no collections, no domain classes, no file I/O. The single provided static class and the custom exception are the only types you need.
+- Do not modify the provided interfaces, the UI, or the test files.
+- Match the names/signatures in the brief exactly — the provided UI and tests
+  depend on them.
+- No mocking frameworks; use the hand-written `InMemoryExpenseStore` fake pattern.
