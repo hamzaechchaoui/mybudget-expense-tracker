@@ -1,3 +1,4 @@
+
 // =====================================================================
 //  MyBudget — Assignment 3 entry point (composition root).
 //
@@ -25,6 +26,15 @@ string dataPath = Path.Combine(AppContext.BaseDirectory, "expenses.json");
 //   - ConsoleApp          (the UI, so it can be resolved below)
 // Choose appropriate service lifetimes (singleton / scoped / transient).
 
+builder.Services.AddSingleton<IExpenseStore>(provider => new JsonExpenseStore(dataPath));
+
+builder.Services.AddSingleton<IExpenseRepository, ExpenseRepository>();
+
+builder.Services.AddTransient<IBudgetService, BudgetService>();
+
+builder.Services.AddTransient<ConsoleApp>();
+
 using IHost host = builder.Build();
 
+// Resolve and execute the application UI loop pipeline
 host.Services.GetRequiredService<ConsoleApp>().Run();
